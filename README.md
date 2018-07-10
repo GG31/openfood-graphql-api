@@ -21,6 +21,10 @@ Install dependencies
 ```
 pip3 install -r requirements.txt
 ```
+Set your database
+```
+mongorestore -d openfoodfacts -c products products.bson
+```
 Run
 ```
 python3 main.py

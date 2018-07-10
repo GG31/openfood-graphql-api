@@ -3,3 +3,4 @@ configparser>=3.5.0
 pytest>=3.6.3
 flask-graphql>=1.4.1
 graphene>=2.1.2
+pymongo>=3.7.0
