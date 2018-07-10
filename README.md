@@ -1,6 +1,6 @@
-# Scaffold
+# OpenFood graphql API
 ## Introduction
-This project aims to give a code base for an Flask service.
+This project aims to give a graphql endpoint for the open food facts data
 
 ## Prerequisite
 - python3

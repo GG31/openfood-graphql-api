@@ -1,14 +1,25 @@
 from flask import Flask
-from .hello import Hello
+from flask_graphql import GraphQLView
 
 
-def create_router(config, logger):
-    app = Flask(config['project']['name'])
-    logger = logger.get_logger(__name__)
+class Router:
+    def __init__(self, config, logger, schema, hello, products):
+        self.__config = config
+        self.__logger = logger.get_logger(__name__)
+        self.__schema = schema
+        self.__hello = hello
+        self.__products = products
 
-    @app.route('/')
-    @app.route('/<username>')
-    def hello(hello: Hello, username='Bob'):
-        logger.info('/ called')
-        return '%s %s' % (hello.say_hello(), username)
-    return app
+    def create_router(self):
+        this = self
+        app = Flask(self.__config['project']['name'])
+
+        app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql', schema=self.__schema, graphiql=True, context={ 'products': self.__products }))
+
+        @app.route('/')
+        @app.route('/<username>')
+        def hello(username='Bob'):
+            this.__logger.info('/ called')
+            return '%s %s' % (this.__hello.say_hello(), username)
+
+        return app
