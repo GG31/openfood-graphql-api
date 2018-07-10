@@ -6,8 +6,11 @@ class Products:
         self.__logger = logger
         self.__collection = db[self.__config['databases']['collection']]
 
-    def get_products(self, first, after):
-        cursor = self.__collection.find(skip=after, limit=first)
+    def get_products(self, **kwargs):
+        query = {}
+        if 'barcode' in kwargs:
+            query['code'] = kwargs['barcode']
+        cursor = self.__collection.find(query, skip=kwargs['after'], limit=kwargs['first'])
         result = [Products.format_product(product) for product in cursor]
         result = Object(products=result, total=len(result))
         return result
