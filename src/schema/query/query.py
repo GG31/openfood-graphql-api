@@ -8,6 +8,8 @@ class Query(graphene.ObjectType):
         first=graphene.Int(default_value=10),
         after=graphene.Int(default_value=0),
         barcode=graphene.String(required=False),
+        origin=graphene.String(required=False),
+        brand=graphene.String(required=False),
     )
 
     def resolve_products(self, info, **kwargs):
