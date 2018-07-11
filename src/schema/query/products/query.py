@@ -8,9 +8,10 @@ class Ingredient(graphene.ObjectType):
 
 class Product(graphene.ObjectType):
     name = graphene.String()
-    origin = graphene.String()
-    brand = graphene.String()
+    brands = graphene.List(graphene.String)
+    origins = graphene.List(graphene.String)
     ingredients = graphene.List(Ingredient)
+    quantity = graphene.String()
 
 
 class Products(graphene.ObjectType):

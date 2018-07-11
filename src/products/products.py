@@ -12,9 +12,9 @@ class Products:
         if 'barcode' in kwargs:
             query['code'] = kwargs['barcode']
         if 'origin' in kwargs:
-            query['origins'] = kwargs['origin']
+            query['origins'] = { '$regex': u'.*' + kwargs['origin'] + '.*' }
         if 'brand' in kwargs:
-            query['brands'] = kwargs['brand']
+            query['brands'] = { '$regex': u'.*' + kwargs['brand'] + '.*' }
         cursor = self.__collection.find(query, skip=kwargs['after'], limit=kwargs['first'])
         result = [Products.format_product(product) for product in cursor]
         result = Object(products=result, total=len(result))
@@ -29,8 +29,10 @@ class Products:
             ingredients = [Object(id=ingredient['id'], name=ingredient['text']) for ingredient in product['ingredients']]
             formatted_product.ingredients = ingredients
         if 'origins' in product:
-            formatted_product.origin = product['origins']
+            formatted_product.origins = product['origins'].split(',')
         if 'brands' in product:
-            formatted_product.brand = product['brands']
+            formatted_product.brands = product['brands'].split(',')
+        if 'quantity' in product:
+            formatted_product.quantity = product['quantity']
 
         return formatted_product
