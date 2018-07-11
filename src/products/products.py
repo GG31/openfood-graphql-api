@@ -32,11 +32,11 @@ class Products:
             ingredients = [Object(id=ingredient['id'], name=ingredient['text']) for ingredient in product['ingredients']]
             formatted_product.ingredients = ingredients
         if 'origins' in product:
-            formatted_product.origins = product['origins'].split(',')
+            formatted_product.origins = [Object(id=tag, name=origin) for (tag, origin) in zip(product['origins_tags'], product['origins'].split(','))]
         if 'brands' in product:
             formatted_product.brands = product['brands'].split(',')
         if 'categories' in product:
-            formatted_product.categories = product['categories'].split(',')
+            formatted_product.categories = [Object(id=tag, name=category) for (tag, category) in zip(product['categories_tags'], product['categories'].split(','))]
         if 'quantity' in product:
             formatted_product.quantity = product['quantity']
 
