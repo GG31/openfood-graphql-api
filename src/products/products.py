@@ -22,7 +22,6 @@ class Products:
 
     @staticmethod
     def format_product(product):
-        print(product)
         formatted_product = Object()
         if 'product_name' in product:
             formatted_product.name = product['product_name']
