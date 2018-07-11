@@ -15,6 +15,8 @@ class Products:
             query['origins'] = { '$regex': u'.*' + kwargs['origin'] + '.*' }
         if 'brand' in kwargs:
             query['brands'] = { '$regex': u'.*' + kwargs['brand'] + '.*' }
+        if 'category' in kwargs:
+            query['categories'] = { '$regex': u'.*' + kwargs['category'] + '.*' }
         cursor = self.__collection.find(query, skip=kwargs['after'], limit=kwargs['first'])
         result = [Products.format_product(product) for product in cursor]
         count = self.__collection.count(query)
@@ -33,6 +35,8 @@ class Products:
             formatted_product.origins = product['origins'].split(',')
         if 'brands' in product:
             formatted_product.brands = product['brands'].split(',')
+        if 'categories' in product:
+            formatted_product.categories = product['categories'].split(',')
         if 'quantity' in product:
             formatted_product.quantity = product['quantity']
 
