@@ -17,7 +17,8 @@ class Products:
             query['brands'] = { '$regex': u'.*' + kwargs['brand'] + '.*' }
         cursor = self.__collection.find(query, skip=kwargs['after'], limit=kwargs['first'])
         result = [Products.format_product(product) for product in cursor]
-        result = Object(products=result, total=len(result))
+        count = self.__collection.count(query)
+        result = Object(products=result, total=count)
         return result
 
     @staticmethod
